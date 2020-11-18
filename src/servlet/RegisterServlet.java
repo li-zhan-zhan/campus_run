@@ -7,7 +7,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import tool.DBConnection;
+import tool.DBUtils;
 
 @WebServlet("/RegisterServlet")
 public class RegisterServlet extends HttpServlet {
@@ -19,21 +19,20 @@ public class RegisterServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String type = request.getParameterValues("type")[0];
 		try {
-			Connection conn = DBConnection.getConnection();
+			Connection conn = DBUtils.getConnection();
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("select * from user");
+			ResultSet rs = s.executeQuery("select * from "+type);
 			while(rs.next()) {
-				if(rs.getString("uname").equals(username) && rs.getString("type").equals(type)) {
+				if(rs.getString("username").equals(username)) {
 					session.setAttribute("message", "用户已存在！");
 					response.sendRedirect("error.jsp");
 					return;
 				}
 			}
 			
-			PreparedStatement ps = conn.prepareStatement("insert into user(uname,pwd,type) values(?,?,?)");
+			PreparedStatement ps = conn.prepareStatement("insert into "+type+"(username,password) values(?,?)");
 			ps.setString(1, username);
 			ps.setString(2, password);
-			ps.setString(3, type);
 			boolean res = ps.execute();
 			if(!res) {
 				session.setAttribute("username", username);

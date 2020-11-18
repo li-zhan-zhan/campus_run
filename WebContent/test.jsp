@@ -1,4 +1,4 @@
-<%@page import="tool.DBConnection"%>
+<%@page import="tool.DBUtils"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.Connection"%>
@@ -12,7 +12,7 @@
 </head>
 <body>
 <%
-Connection conn = DBConnection.getConnection();
+	Connection conn = DBUtils.getConnection();
 Statement statement = conn.createStatement();
 ResultSet rs = statement.executeQuery("select * from user");
 while(rs.next()) {

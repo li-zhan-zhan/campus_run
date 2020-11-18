@@ -1,0 +1,17 @@
+body{
+	
+}
+#mForm{
+	width:30%;
+	height:170px;
+	padding:10px 20px;
+	margin:0 auto;
+	
+	background-color:#ccc;
+}
+#mForm form{
+	float:left;
+}
+#mForm input{
+	margin:10px 0;
+}

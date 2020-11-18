@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import tool.DBConnection;
+import tool.DBUtils;
 
 @WebServlet("/LoginCheckServlet")
 public class LoginCheckServlet extends HttpServlet {
@@ -25,26 +25,16 @@ public class LoginCheckServlet extends HttpServlet {
 		String password = request.getParameter("password");
 		String type = request.getParameterValues("type")[0];
 		try {
-			Connection conn = DBConnection.getConnection();
-			String sql = "select * from user";
+			Connection conn = DBUtils.getConnection();
+			String sql = "select * from "+type;
 			Statement cs = conn.createStatement();
 			ResultSet rs = cs.executeQuery(sql);
 			while(rs.next()) {
-				System.out.println("db "+rs.getString("uname") +rs.getString("pwd"));
-				System.out.println("input "+username+password);
-				if(rs.getString("uname").equals(username) && rs.getString("pwd").equals(password)) {
+				if(rs.getString("username").equals(username) && rs.getString("password").equals(password)) {
 					session.setAttribute("username", username);
 					session.setAttribute("type", type);
-					if(rs.getString(4).equals(type)) {
-						response.sendRedirect(type+".jsp");
-						return;
-					} else {
-						session.removeAttribute("username");
-						session.removeAttribute("type");
-						session.setAttribute("message", "用户未注册！");
-						response.sendRedirect("error.jsp");
-						return;
-					}
+					response.sendRedirect(type+".jsp");
+					return;
 				}
 			}
 			session.setAttribute("message", "用户名或者密码错误！");

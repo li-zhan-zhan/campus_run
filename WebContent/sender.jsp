@@ -7,7 +7,16 @@
 <title>sender</title>
 </head>
 <body>
-欢迎您:<%=(String)session.getAttribute("username") %>!
+<%
+	String username = (String)session.getAttribute("username");
+	String type = (String)session.getAttribute("type");
+	if(username==null || !type.equals("sender")){
+		response.sendRedirect("login.jsp");
+}
+%>
+欢迎您:<%=username %>!
 <a href="LogoutServlet">退出登陆</a>
+<br>
+
 </body>
 </html>
