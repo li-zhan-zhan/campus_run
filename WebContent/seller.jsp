@@ -5,16 +5,36 @@
 <head>
 <meta charset="utf-8">
 <title>seller</title>
+<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
+<script src="js/bootstrap.min.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 </head>
 <body>
 <%
 	String username = (String)session.getAttribute("username");
 	String type = (String)session.getAttribute("type");
-	if(username==null || !type.equals("seller")){
-	response.sendRedirect("login.jsp");
-}
+	if(username==null){
+		response.sendRedirect("login.jsp");
+	} else if(!type.equals("seller")) {
+		response.sendRedirect(type+".jsp");
+	}
+
 %>
-欢迎您:<%=username %>!
-<a href="LogoutServlet">退出登陆</a>
+<div class="container">
+	<div class="jumbotron">
+	<h1>欢迎您:<%=username%>!</h1>
+	<p>
+		<a class="btn btn-primary btn-lg" href="order.jsp" role="button">查看订单</a>
+		<a class="btn btn-primary btn-lg" href="LogoutServlet" role="button">退出登陆</a>
+	</p>
+	</div>
+添加商品
+<form action="addGoodsServlet" method="get">
+name:<input type="text" name="name"><br>
+price:<input type="text" name="price"><br>
+stock:<input type="text" name=""><br>
+describe<textarea rows="3" cols="20"></textarea><br>
+</form>
+</div>
 </body>
 </html>

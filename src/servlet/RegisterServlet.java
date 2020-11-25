@@ -1,6 +1,7 @@
 package servlet;
 
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.*;
 
 import javax.servlet.ServletException;
@@ -15,6 +16,7 @@ public class RegisterServlet extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		HttpSession session = request.getSession();
+		PrintWriter out = response.getWriter();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String type = request.getParameterValues("type")[0];
@@ -24,8 +26,7 @@ public class RegisterServlet extends HttpServlet {
 			ResultSet rs = s.executeQuery("select * from "+type);
 			while(rs.next()) {
 				if(rs.getString("username").equals(username)) {
-					session.setAttribute("message", "用户已存在！");
-					response.sendRedirect("error.jsp");
+					out.print("err");
 					return;
 				}
 			}
@@ -37,11 +38,9 @@ public class RegisterServlet extends HttpServlet {
 			if(!res) {
 				session.setAttribute("username", username);
 				session.setAttribute("type", type);
-				response.sendRedirect(type+".jsp");
-				
+				out.print(type);
 			} else {
-				session.setAttribute("message", "注册失败！");
-				response.sendRedirect("error.jsp");
+				out.print("err");
 			}
 		} catch (Exception e) {
 			System.out.println("err:"+e.getMessage());

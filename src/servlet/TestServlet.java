@@ -11,40 +11,35 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import tool.DBUtils;
 
-@WebServlet("/LoginCheckServlet")
-public class LoginCheckServlet extends HttpServlet {
+@WebServlet("/TestServlet")
+public class TestServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		PrintWriter out = response.getWriter();
+
+	protected void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		response.setCharacterEncoding("utf-8");
+		PrintWriter pw = response.getWriter();
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
-		String type = request.getParameterValues("type")[0];
 		try {
 			Connection conn = DBUtils.getConnection();
-			String sql = "select * from "+type;
+			String sql = "select * from buyer";
 			Statement cs = conn.createStatement();
 			ResultSet rs = cs.executeQuery(sql);
 			while(rs.next()) {
 				if(rs.getString("username").equals(username) && rs.getString("password").equals(password)) {
-					session.setAttribute("username", username);
-					session.setAttribute("type", type);
-					session.setAttribute("id", rs.getString("id"));
-					out.print(type);
+					pw.print(1);
 					return;
 				}
 			}
-			out.print("err");
+			pw.print("用户名或者密码错误！");
 		} catch (Exception e) {
 			System.out.println("err:"+e.getMessage());
 		}
+		pw.close();
 	}
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		doGet(request, response);
-	}
+	
 
 }
