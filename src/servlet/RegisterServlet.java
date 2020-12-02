@@ -20,11 +20,16 @@ public class RegisterServlet extends HttpServlet {
 		String username = request.getParameter("username");
 		String password = request.getParameter("password");
 		String type = request.getParameterValues("type")[0];
+		String id = "";
 		try {
 			Connection conn = DBUtils.getConnection();
 			Statement s = conn.createStatement();
-			ResultSet rs = s.executeQuery("select * from "+type);
+			ResultSet rs = s.executeQuery("select * from "+type +" order by id ");
+			rs.last();
+			id = rs.getString("id");
+			rs.beforeFirst();
 			while(rs.next()) {
+				
 				if(rs.getString("username").equals(username)) {
 					out.print("err");
 					return;
@@ -38,6 +43,7 @@ public class RegisterServlet extends HttpServlet {
 			if(!res) {
 				session.setAttribute("username", username);
 				session.setAttribute("type", type);
+				session.setAttribute("id", id);
 				out.print(type);
 			} else {
 				out.print("err");

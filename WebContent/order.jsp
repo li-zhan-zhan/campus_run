@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>order</title>
+<title>查看订单</title>
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -14,6 +14,15 @@
 </style>
 </head>
 <body>
+<%
+	request.setCharacterEncoding("utf-8");
+	String username = (String)session.getAttribute("username");
+	String type = (String)session.getAttribute("type");
+	if(username==null){
+		response.sendRedirect("login.jsp");
+		return;
+	}
+%>
 <div class="container">
 <div class="jumbotron">
   <h1>欢迎您:<%=session.getAttribute("username")%>!</h1>
@@ -25,15 +34,15 @@
 </tr>
 <%
 	request.setCharacterEncoding("utf-8");
-	String type = (String)session.getAttribute("type");
 	Connection conn = DBUtils.getConnection();
 	String id = (String)session.getAttribute("id");
-	String sql = "SELECT `order`.id,`order`.time,`order`.`status`,	goods.`name`,buyer.username,seller.username "+
+	String sql = "SELECT `order`.id,`order`.time,`order`.`status`,goods.`name`,buyer.username,seller.username "+
 			" FROM `order` "+
 			" INNER JOIN goods ON `order`.goods_id = goods.id "+
 			" INNER JOIN buyer ON `order`.buyer_id = buyer.id "+
 			" INNER JOIN seller ON `order`.seller_id = seller.id "+
 			" where `order`."+type+"_id="+id+" order by `order`.time desc"; 
+	//System.out.println(sql);
 	Statement s = conn.createStatement();
 	ResultSet rs = s.executeQuery(sql);
 	while(rs.next()){
@@ -68,5 +77,6 @@
 <% } %>
 </table>
 </div>
+  <p class="mt-5 mb-3 text-muted text-center">&copy;2020 校园跑</p>
 </body>
 </html>

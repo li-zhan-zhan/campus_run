@@ -4,10 +4,11 @@
 <html>
 	<head>
 		<meta charset="utf-8">
-		<title>login</title>
+		<title>登录</title>
 		<script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 		<script src="js/bootstrap.min.js" type="text/javascript"></script>
 		<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
+		<link rel="stylesheet" type="text/css" href="css/login.css">
 		<script type="text/javascript">
 			$(document).ready(function() {
 				$("form").submit(function() {
@@ -31,41 +32,29 @@
 			});
 		</script>
 	</head>
-	<body>
-		<div class="container">
-			<div class="jumbotron">
-				<h1>欢迎来到校园跑系统！</h1>
-				<p>...</p>
-				<p><a class="btn btn-primary btn-lg" href="register.jsp" role="button">去注册</a></p>
-			</div>
-			<form class="form-horizontal" action="LoginCheckServlet" method="get">
-				<div class="form-group row">
-					<label class="col-sm-2 col-form-label">用户名：</label>
-					<div class="col-sm-10">
-						<input type="text" class="form-control" name="username" placeholder="请输入用户名">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputPassword" class="col-sm-2 col-form-label">密码：</label>
-					<div class="col-sm-10">
-						<input type="password" class="form-control" name="password" placeholder="请输入密码">
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputPassword" class="col-sm-2 col-form-label"></label>
-					<div class="col-sm-10">
-						<input type="radio" name="type" id="inlineRadio1" value="buyer" checked /> 买家
-						<input type="radio" name="type" id="inlineRadio1" value="seller"> 卖家
-						<input type="radio" name="type" id="inlineRadio1" value="sender"> 骑手
-					</div>
-				</div>
-				<div class="form-group row">
-					<label for="inputPassword" class="col-sm-2 col-form-label"></label>
-					<div class="col-sm-10">
-						<button type="submit" class="btn btn-primary">登陆</button>
-					</div>
-				</div>
-			</form>
-		</div>
-	</body>
+	
+	<body class="text-center">
+    <form class="form-signin" action="LoginCheckServlet" method="get">
+  <img class="mb-4" src="img/logo.PNG" alt="" width="96" height="96">
+  <h2 class="h3 mb-3 font-weight-normal">欢迎来到校园跑系统<br>请登录</h2>
+  <label  class="sr-only">Username</label>
+  <input   class="form-control" placeholder="Username" name="username" required autofocus>
+  <label for="inputPassword" class="sr-only">Password</label>
+  <input type="password" id="inputPassword" class="form-control" placeholder="Password" name="password" required>
+  <div class="form-group row">
+	<div class="col-sm-10">
+		用户类别：<select name="type">
+			<option value="buyer" selected>买家</option>
+			<option value="seller">卖家</option>
+			<option value="sender">骑手</option>
+		</select>
+	</div>
+	
+</div>
+
+  <button class="btn btn-lg btn-primary btn-block" type="submit">登录</button>
+  <p><a href="register.jsp">去注册</a></p>
+  <p class="mt-5 mb-3 text-muted">&copy;2020 校园跑</p>
+</form>
+</body>
 </html>

@@ -6,7 +6,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<title>sender</title>
+<title>骑手页面</title>
 <script src="js/jquery-2.1.4.min.js" type="text/javascript"></script>
 <script src="js/bootstrap.min.js" type="text/javascript"></script>
 <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
@@ -24,7 +24,7 @@
 %>
 <div class="container">
 <div class="jumbotron">
-  <h1>欢迎您:<%=username%>!</h1>
+  <h1>欢迎骑手:<%=username%>!</h1>
   <p>
   	<a class="btn btn-primary btn-lg" href="order.jsp" role="button">查看订单</a>
   	<a class="btn btn-primary btn-lg" href="LogoutServlet" role="button">退出登陆</a>
@@ -58,6 +58,7 @@
 </tr>
 <% } %>
 </table>
+  <p class="mt-5 mb-3 text-muted text-center">&copy;2020 校园跑</p>
 </body>
 </div>
 </html>
